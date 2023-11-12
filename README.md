@@ -1,5 +1,5 @@
 # check-image-webp-avif-js
-## Check image webp, avif with native JavaScript
+## Check image webp, avif with native JavaScript. HTML5 picture element code example
 
 
 ### Чтобы проверить поддерживает ли браузер пользователя webp, avif, можно использовать следующий код...
