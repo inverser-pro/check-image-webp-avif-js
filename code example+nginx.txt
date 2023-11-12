@@ -135,3 +135,6 @@ nginx.conf
 
 Добавить SVG на сайт
   https://www.youtube.com/watch?v=stC4Ib9vlP0
+
+Brotli, HTTP3 webserver
+  https://www.youtube.com/watch?v=K_p2nJbQVdc
