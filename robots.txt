@@ -1,0 +1,24 @@
+Host: https://site.org
+
+User-agent: *
+allow: /images/
+allow: /
+
+Disallow: *orderby=latest&Itemid=*
+Disallow: *dir=DESC&*
+Disallow: *?dir=ASC&*
+Disallow: *component/tags*
+Disallow: *?format=feed&type=atom*
+Disallow: *orderby=default*
+Disallow: *option=com_webplayer*
+Disallow: *Download-document*
+Disallow: *License-acceptance*
+Disallow: *knigi/metodika-sales-30*
+Disallow: *View-document-details*
+Disallow: /vd/
+Disallow: *video-uroki/ed-ox-del*
+Disallow: *video-uroki/online-business*
+Disallow: *d-korporatsiya*
+Crawl-delay: 10
+
+Sitemap: https://site.org/sitemap.xml

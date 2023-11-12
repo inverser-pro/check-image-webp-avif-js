@@ -112,4 +112,22 @@ nginx.conf
   # https://medium.com/@emmanueldavidson/configuring-caching-rate-limiting-and-last-modified-in-nginx-for-serving-static-files-c34cd6e1d2b2
   add_header Last-Modified $date_gmt;
 
-  ccskrf yf svg
+
+
+## Светлая/тёмная темы сайта
+
+@media (prefers-color-scheme:dark) {
+  /*Ваш CSS здесь*/
+}
+
+
+// https://joyofcode.xyz/dark-mode-favicon
+  const fvicn = d.querySelector('link[rel="alternate icon"]');
+  const mq = window.matchMedia('(prefers-color-scheme: dark)');
+  fvicn.href=(mq.matches)?'/favicon-dark.avif':'/favicon.avif';
+
+
+// https://stackoverflow.com/questions/56393880/how-do-i-detect-dark-mode-using-javascript
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      const newColorScheme = event.matches ? "dark" : "light";
+  });
