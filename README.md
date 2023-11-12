@@ -49,8 +49,8 @@ WEBP и AVIF — современные форматы изображений. W
 
 AVIF — достаточно свежий формат, который показывает ошеломляющие результаты сжатия по сравнению с JPG. Можно достичь прироста в 50%, при том же визуальном качестве.
 
-Подробнее о новом формате для WEB, на английском языке: [AVIF browser test page: AVIF support in Chrome, Firefox, Edge…](https://link.inverser.pro/r2?l=https://libre-software.net/avif-test/)
+Подробнее о новом формате для WEB, на английском языке: [AVIF browser test page: AVIF support in Chrome, Firefox, Edge…](https://libre-software.net/avif-test/)
 
-[Онлайн конвертер](https://link.inverser.pro/r2?l=https://squoosh.app) PNG, AVIF, JPEG, WEBP...
+[Онлайн конвертер](https://squoosh.app) PNG, AVIF, JPEG, WEBP...
 
-[Узнать поддерживает ли какой браузер AVIF](https://link.inverser.pro/r2?l=https://caniuse.com/avif).
+[Узнать поддерживает ли какой браузер AVIF](https://caniuse.com/avif).
