@@ -18,6 +18,9 @@ convert img.jpg -quality 72 -resize 750x422 img-750.jpg
 
 * во время конвертации изображение будет уменьшено до меньшего (по высоте или ширине) размера. К примеру, если было 2160*1440, то уменьшится при настройке 1080*608 до 912*608, т.е. возьмётся меньший параметр
 
+convert qr-code.jpg -quality 78 qr-code.avif && \
+convert qr-code.jpg -quality 78 qr-code.web
+
 
 https://medium.com/@uxshan/quickly-generate-responsive-images-that-work-in-all-browsers-and-massively-reduce-your-download-36a1ef6e4e60
 <picture>
