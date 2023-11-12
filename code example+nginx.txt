@@ -131,3 +131,7 @@ nginx.conf
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
       const newColorScheme = event.matches ? "dark" : "light";
   });
+
+
+Добавить SVG на сайт
+  https://www.youtube.com/watch?v=stC4Ib9vlP0
