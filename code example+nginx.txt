@@ -1,3 +1,5 @@
+используйте imagemagic на Linx/Win для реализации этой команды
+
 convert img.jpg -quality 72 -resize 2160x1440 img-2160.avif &&
 convert img.jpg -quality 72 -resize 1920x1080 img-1920.avif &&
 convert img.jpg -quality 72 -resize 1366x768 img-1366.avif &&
