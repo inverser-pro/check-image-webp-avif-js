@@ -1,0 +1,110 @@
+convert img.jpg -quality 72 -resize 2160x1440 img-2160.avif &&
+convert img.jpg -quality 72 -resize 1920x1080 img-1920.avif &&
+convert img.jpg -quality 72 -resize 1366x768 img-1366.avif &&
+convert img.jpg -quality 72 -resize 1080x608 img-1080.avif  &&
+convert img.jpg -quality 72 -resize 750x422 img-750.avif &&
+convert img.jpg -quality 72 -resize 2160x1440 img-2560.webp &&
+convert img.jpg -quality 72 -resize 1920x1080 img-1920.webp &&
+convert img.jpg -quality 72 -resize 1366x768 img-1366.webp &&
+convert img.jpg -quality 72 -resize 1080x608 img-1080.webp  &&
+convert img.jpg -quality 72 -resize 750x422 img-750.webp &&
+convert img.jpg -quality 72 -resize 2160x1440 img-2560.jpg &&
+convert img.jpg -quality 72 -resize 1920x1080 img-1920.jpg &&
+convert img.jpg -quality 72 -resize 1366x768 img-1366.jpg &&
+convert img.jpg -quality 72 -resize 1080x608 img-1080.jpg  &&
+convert img.jpg -quality 72 -resize 750x422 img-750.jpg
+
+* во время конвертации изображение будет уменьшено до меньшего (по высоте или ширине) размера. К примеру, если было 2160*1440, то уменьшится при настройке 1080*608 до 912*608, т.е. возьмётся меньший параметр
+
+
+https://medium.com/@uxshan/quickly-generate-responsive-images-that-work-in-all-browsers-and-massively-reduce-your-download-36a1ef6e4e60
+<picture>
+  <source   media=”(min-width: 900px)”
+  srcset=“image-lg_1x.webp 1x, image-lg_2x.webp 2x”
+  type=“image/webp” >
+  <source   media=”(min-width: 601px)”
+  srcset=“image-md_1x.webp 1x, image-md_2x.webp 2x”   type=“image/webp” >
+  <source   media=”(max-width: 600px)”
+  srcset=“image-sm_1x.webp 1x, image-sm_1x.webp 1x”   type=“image/webp” >
+  <img   src=“image-lg_1x.jpg”   type=“image/jpeg” ”>
+</picture>
+
+
+ndv.innerHTML=`<div class="pr prcImg">
+<picture>${tplPic(im,'br.2','','lazy')}</picture>
+<button class="pa btn p4 br tu goToCourseInfo" data-id="${l}"><svg viewBox="0 0 64 64" class="vas" width="10"><use href="/sys/s.svg#more"></use></svg> Подробнее</button>
+</div>
+<h4>${e?.ttl}</h4>
+<div class=prcTxt>
+  <div class="fx ac fsa fw gap.3">
+    ${prcs}
+    ${tim}
+    <button class="fx ac br p4 bx bxsh tu bgf ${clss}" data-h3="${h3}">${svg_}</button>
+  </div>
+</div>`;
+
+function tplPic(im,clss='',alt='',loading=''){
+  if(loading)loading=` loading=lazy`;
+  return `
+<source type="image/avif" srcset="${im}-750.avif 750w,
+${im}-1080.avif 1080w,
+${im}-1366.avif 1366w,
+${im}-1920.avif 1920w,
+${im}-2560.avif 2560w" sizes="(min-width: 2560px) 2560px, 100vw">
+<source type="image/webp" srcset="${im}-750.webp 750w,
+${im}-1080.webp 1080w,
+${im}-1336.webp 1366w,
+${im}-1920.webp 1920w,
+${im}-2560.webp 2560w" sizes="(min-width: 2560px) 2560px, 100vw">
+<img width="2560" sizes="(min-width: 2560px) 2560px, 100vw" decoding="async"${loading} src="${im}-2560.jpg" class="${clss}" srcset="${im}-750.jpg 750w,
+${im}-1080.jpg 1080w,
+${im}-1366.jpg 1366w,
+${im}-1920.jpg 1920w,
+${im}-2560.jpg 2560w" alt="${alt}">`
+}
+
+ <picture>
+    <source type="image/avif" srcset="/src/test-img-750.avif 750w,
+    /src/test-img-1080.avif 1080w,
+    /src/test-img-1366.avif 1366w,
+    /src/test-img-1920.avif 1920w,
+    /src/test-img-2160.avif 2160w" sizes="(min-width: 2160px) 2160px, 100vw">
+    <source type="image/webp" srcset="/src/test-img-750.webp 750w,
+    /src/test-img-1080.webp 1080w,
+    /src/test-img-1336.webp 1366w,
+    /src/test-img-1920.webp 1920w,
+    /src/test-img-2160.webp 2160w" sizes="(min-width: 2160px) 2160px, 100vw">
+    <img width="2160" sizes="(min-width: 2160px) 2160px, 100vw" decoding="async" loading="lazy" src="/src/test-img-2160.jpg" class="br.2" srcset="/src/test-img-750.jpg 750w,
+    /src/test-img-1080.jpg 1080w,
+    /src/test-img-1366.jpg 1366w,
+    /src/test-img-1920.jpg 1920w,
+    /src/test-img-2160.jpg 2160w" alt="">
+</picture>
+
+https://developer.mozilla.org/en-US/docs/Web/HTML/Element/picture
+<picture>
+  <source srcset="/media/cc0-images/surfer-240-200.jpg" media="(orientation: portrait)" />
+  <img src="/media/cc0-images/painted-hand-298-332.jpg" alt="" />
+</picture>
+
+https://medium.com/@mike_masey/how-to-use-the-picture-element-to-prevent-images-loading-on-mobile-devices-1376e33b190e
+
+
+nginx.conf
+
+  etag on;
+  # Expires map
+  map $sent_http_content_type $expires {
+      default                    off;
+      text/html                  epoch;
+      text/css                   max;
+      application/javascript     max;
+      ~image/                    max;
+  }
+  # https://www.howtogeek.com/devops/how-to-configure-cache-control-headers-in-nginx/
+  add_header Surrogate-Control "public, max-age=86400";
+  add_header Cache-Control "public, max-age=120"; # max-age указано выше в массиве (map)
+  # https://medium.com/@emmanueldavidson/configuring-caching-rate-limiting-and-last-modified-in-nginx-for-serving-static-files-c34cd6e1d2b2
+  add_header Last-Modified $date_gmt;
+
+  ccskrf yf svg
