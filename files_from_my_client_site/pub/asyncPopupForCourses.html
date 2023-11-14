@@ -1,0 +1,316 @@
+<div class="pr PP dn">
+    <div class="pf pa p0 ovy bgSF blurred popupCourses">
+        <div class="fx jc h1 mh1-2 p4 popupCrs">
+            <div class="p3 br4 bgf bxsh cntr">
+                <button class="fx jce w1 bgf ppBtnCls"><svg viewBox="0 0 24 24"><use xlink:href="/sys/m/c.svg#close"></use></svg></button>
+                <div class="mt3 PPloadHere">
+                    <div class="br loader_"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .PP{z-index:11}
+    .popupCourses svg{min-width:2rem;width:2rem}
+    .ppBtnCls{position:sticky;z-index:2;top:0}
+    .ppBtnCls:active{transform:scale(1)}
+    .ppBtnCls svg{width:3rem}
+    .PP .cntr{width:1286px;min-height:95vh}
+    .loader_{margin:6rem auto;display:flex;justify-content:center;width:3rem;height:3rem;border:.2rem solid;border-color:#000 #000 transparent transparent;animation:q ease-in-out 1s infinite;transform:rotateY(180deg)}
+    @keyframes q{100%{transform:rotateY(180deg)rotate(360deg)}}
+    .br4{border-radius:4rem}
+    .fx1\.1\.33{flex:1 1 33%}
+    /*.PP header{flex-shrink:4}
+    .PP .fx.gap3.fsb span{flex-shrink:1}*/
+    .fb50{flex-basis:50%}
+    ._4{box-shadow:0 0 0 .1rem #0c70ce;padding-bottom:2rem;flex:1 1 24%}
+    h5{font-size:1.27rem}
+    .PP ul{margin:1rem 0 2rem 2rem}
+    .PP ul.acc-h0{box-shadow:inset 6px 0 #8ab4fe;padding-left:1rem;border-radius:0 0 0 .5rem;}
+    .PP ul li{margin:.5rem 0;list-style:inside}
+    .PP .bg_{background-color:#efefef}
+    ul.pc-px10 li{flex-basis:48%}
+    ._mt-7{margin-top:-7rem}
+    .PP .line:after{top:0}
+    .PP .r{width:1.3rem;min-width:1.3rem}
+    .hiddenSrllTo{position: absolute;top:-6rem}
+
+    .acc-hed{cursor:pointer;position:relative;margin-bottom:0;padding-left:2rem}
+    .acc-hed:after,.acc-hed:before{content:'';position:absolute;left:-3px;top:0;width:2rem;height:2rem;color:#334599;transition:box-shadow linear .2s;box-shadow:0 0 0 1px #000;transform:rotatex(180deg);border-radius:.3rem}
+    .acc-hedCl:after{box-shadow:0 0 0 1px #334599}
+    .acc-hed:before{top:0;left:6px;width:1rem;height:1rem;box-shadow:.1rem .1rem #000,.2rem .2rem 0 1px #fff, .3rem .3rem 2px #000, .3rem .3rem 0 3px #fff,.4rem .4rem 4px #000;transition:box-shadow linear .2s,top linear .5s;transform:rotate(45deg)}
+    .acc-hedCl:before{top:20px;box-shadow:-.1rem -.1rem #000,-.2rem -.2rem 0 1px #fff,-.3rem -.3rem 2px #000, -.3rem -.3rem 0 3px #fff,-.4rem -.4rem 4px #000}
+    .acc-h0{max-height:0;overflow:hidden;transition:max-height .7s linear;}
+    .acc-h0Cl{max-height:20rem}
+
+    .PP img{max-width:100%;width:auto;margin:0 auto;display:block}
+
+    @media (max-width:680px){
+        .mob680-fw{flex-wrap:wrap;gap:1rem}
+        .acc-h0Cl {max-height:50rem}
+    }
+    @media (max-width:493px){
+        ul.pc-px10 li{flex-basis:100%}
+        .fx1\.1\.33{flex:1 1 100%}
+        ._4{flex:1 1 100%}
+        .mob-gap0{gap:0}
+        .PP ul.acc-h0{padding-left:.5rem}
+    }
+    @media (hover:hover) {
+        .acc-hed:hover:before{animation:f_ .6s 3}
+        @keyframes f_ {100%{top:5px}}
+    }
+</style>
+<script class="JSOnFetch">(()=>{
+const btnCl=s('.ppBtnCls'),
+      pp=s('.PP'),
+      ctnr=s('.cntr'),
+      duration=500,
+      easing='linear',
+/*Courses funcs*/btnCrss=a('.goToCourseInfo'),
+      json=s('.settingsForCourses'),
+      lh=s('.PPloadHere');
+if(btnCrss&&btnCrss?.length>0&&json){
+ const jsonData=JSON.parse(json.innerText);
+ if(!jsonData.folder){
+  alert(errmsg+' ERROR0260')
+  throw "no courses folder URL in category description";
+ }
+ function clsPP(){
+  if(anime){
+   anime.timeline()
+    .add({targets:btnCl,opacity:[1,0],duration})
+    .add({targets:ctnr,opacity:[1,0],scale:[1,.9],duration,easing})
+    .add({targets:pp,opacity:[1,0],duration,easing,complete:()=>{
+      pp.classList.add('dn');
+      //d.body.classList.remove('ovh');
+     }})
+  }else{
+   pp.classList.add('dn');
+   //d.body.classList.remove('ovh');
+  }
+ }
+
+ function getJSON(link,id){
+  try {
+   fetch(`${link}${id}.json`).then(e=>e.json()).then(e=>{
+    if(!e.n||!e.d||!e.t||!e.td){
+     lh.innerText=errmsg;
+     throw 'No some data from {id}.json';
+    }
+    let _3Blocks='',_4Blocks='',prog='',pulbtm='',docUrl='',result='',
+        i={sizes: {q:48,w:48},icon:'list'};
+    if(e.b3&&e.b3?.length===3){
+     for(const el of e.b3){
+      if(el.i) {
+       [i.icon, i.sizes.q]=el.i.split('|')
+      }
+      if(i.sizes.q.includes(',')){
+       [i.sizes.q,i.sizes.w]=i.sizes.q.split(',')
+      }else{
+       i.sizes.q=i.sizes.w=i.sizes.q
+      }
+      _3Blocks+=`<span class="fx ac fx1.1.33"><svg viewBox="0 0 ${i.sizes.q} ${i.sizes.w}" class="mr1"><use xlink:href="/sys/m/c.svg#${i.icon}"></use></svg>${el.t}</span>
+`;
+     }
+    }
+    if(e.b4&&e.b4?.length>0){
+        for(const el of e.b4){
+         _4Blocks+=`<p class="tc p4 br.2 _4"><span class="pr fx ac jc my1 line"></span>${el}</p>`
+        }
+    }
+    let btnCl='goToPaidCourse',price='';
+    if(e.bt==='free') {
+     btnCl = 'goToFree'
+    }else{
+     price=`<h4>${e.bt} <svg viewBox="0 0 256 256" class="vam r"><use href="/sys/s.svg#rur"></use></svg></h4>`
+    }
+    if(e.pul&&e.pul?.length>0){
+     const clcl={h3:'',ul:'',svg:''};
+     if(e.pul.length>3) {
+      clcl.h3 = ' class="acc-hed"';
+      clcl.ul = ' class="acc-h0"';
+     }
+     for(const el of e.pul){
+      prog+=`<h5${clcl.h3}>${el[0]}</h5><ul${clcl.ul}>`;
+      for(const el2 of el[1]){
+       prog+=`<li>${el2}</li>`
+      }
+      prog+='</ul>'
+     }
+    }
+    if(e.pulb){
+     pulbtm+=`<h5 class="mb0">${e.pulb[0]}</h5><p>${e.pulb[1]}</p>`
+    }
+    /*
+    * <h3 class="tc mt6"><svg viewBox="0 0 512 512" width="20" class="vam"><use xlink:href="/sys/m/c.svg#teacher"></use></svg> Лекторы</h3>
+    * */
+    if(e.doc){
+     docUrl=`<img src="${e.doc}" alt>`
+    }
+    if(e.res&&e.res?.length>0){
+     result='<ul class="fx fw gap1 mob-fw pc-px10">'
+     for(const el of e.res){
+      result+=`<li>${el}</li>`
+     }
+     result+='</ul>'
+    }
+    let courseFolder=link.split('/'),
+        docPlus='',
+        docPlusTxt='';
+    courseFolder=courseFolder.at(-2);
+    if(e?.docPlus==="1"){
+     docPlus=' +Сертификат ИПБР';docPlusTxt='<p>Если у вас есть аттестат профессионального бухгалтера ИПБ России, после передачи нам всех необходимых документов вы можете получить сертификат 40 часов</p>'
+    }
+    lh.innerHTML=`
+<div class="fx fsb gap3 mob680-fw">
+    <div class="hiddenSrllTo"></div>
+    <header class="fx1.1.60">
+        <h3 class=mt0>${e.n}</h3>
+        <small class="db c7c tu">Идентификатор курса: ${courseFolder}-${id}</small>
+        <span>${e.d}</span>
+    </header>
+    <span class="fx1.1.33">
+        <h4 class=mt0>${e.t}</h4>
+        <q>${e.td}</q>
+        ${price}
+        <button class="fx ac mlra mt2 p4 bgb cf fs1.2 btn ${btnCl} btGoToCourse"><svg viewBox="0 0 25 25" class="invert" width="20"><use xlink:href="/sys/m/c.svg#checkout"></use></svg> ЗАПИСАТЬСЯ</button>
+    </span>
+</div>
+<div class="pr fx ac jc pt8 line"></div>
+<div class="fx fsb mob680-fw">
+    ${_3Blocks}
+</div>
+<h3 class="tc mt6"><svg viewBox="0 0 32 32" width="20" class="vam"><use xlink:href="/sys/m/c.svg#question"></use></svg> Кому будет полезен</h3>
+<div class="fx fw jc gap1 mob-gap0 pc-px10">${_4Blocks}</div>
+<h3 class="tc mt6"><svg viewBox="0 0 48 48" width="20" class="vam"><use xlink:href="/sys/m/c.svg#list"></use></svg> Программа</h3>
+<div class=pc-px10>
+    ${prog}
+    ${pulbtm}
+    <div class="bg_ br.2 p3">
+        <h3 class="tc mt6"><svg viewBox="0 0 512 512" width="20" class="vam"><use xlink:href="/sys/m/c.svg#document"></use></svg> Документ${docPlus}</h3>
+        ${docPlusTxt}
+        ${docUrl}
+    </div>
+</div>
+<h3 class="tc mt6"><svg viewBox="0 0 152.837 241.349" width="20" class="vam"><use xlink:href="/sys/m/c.svg#happy"></use></svg> Ваш результат</h3>
+${result}
+<h3 class="tc mt6 mb2"><svg viewBox="0 0 64 64" width="20" class="vam"><use xlink:href="/sys/m/c.svg#timeline"></use></svg> Процесс</h3>
+<div class="pr">
+    <h4>Шаг 1. Смотрите видео в записи</h4>
+    <p>В записи в удобное для вас время. Вам сразу доступны все видео.</p>
+    <img class="pr z-1 _mt-7" width=1070 height=630 loading=lazy src="/images/crs/courses-01.jpg" alt>
+</div>
+<div class="fx jc mob-fw">
+    <div>
+        <h4>Шаг 2. Сдавайте онлайн-тесты</h4>
+        <p>Вы можете по желанию проверить свои знания.</p>
+    </div>
+    <img class=fb50 loading=lazy width=653 height=626 src="/images/crs/courses-02.svg" alt>
+</div>
+<div class="fx jc fdrr mob-fw">
+    <div>
+        <h4>Шаг 3. Получите сертификат</h4>
+        <p>После успешного прохождения теста сертификат будет ждать в личном кабинете. Вы можете скачать его и поделиться в любых социальных сетях.</p>
+    </div>
+    <img class=fb50 loading=lazy width=430 height=488 src="/images/crs/courses-03.svg" alt>
+</div>
+
+    `;
+    const btn_=s('.btGoToCourse');
+    if(e?.bt){
+     btn_.addEventListener('click',()=>{
+         if(e?.bt==='free'){
+             const goToFree=s('.goToFree');
+             if(goToFree){
+                 let h3=goToFree.dataset.h3;
+                 goToFree.setAttribute('data-h3','Записаться на курс');
+                 goToFree.click();
+                 if(h3){
+                     goToFree.setAttribute('data-h3',h3);
+                 }else{goToFree.setAttribute('data-h3','')}
+                 h3=null
+             }
+         }else{// paid courses
+             const scrollHere=s('.scrollHere'),
+                   ebKntr=s('.skb-order-form__input.js-memorized.js-other-country-input');// it's just in case
+             clsPP();
+             if(scrollHere)scrollHere.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
+             if(ebKntr)ebKntr.focus()
+         }
+
+     })
+    }
+    const allHdrs=a('.acc-hed'),
+          allDivs=a('.acc-h0');
+    if(allHdrs&&allDivs&&allHdrs?.length===allDivs?.length){
+     for(let i=0;i<allHdrs.length;i++){
+      allHdrs[i].addEventListener('click',()=>{
+       allHdrs[i].classList.toggle('acc-hedCl')
+       allDivs[i].classList.toggle('acc-h0Cl')
+      })
+     }
+    }
+   }).catch(err=>{
+    alert('FRONT_ERROR 9900 > ' + errmsg + ' ... ' + err);
+    const eee=`FRONT_ERROR 9900 > Отсутствует файл (либо ошибка) {${link}${id}.json}`
+    lh.innerHTML=`ERROR 9900. ${errmsg}<br><h4>${eee}</h4>`;
+    throw `${eee} ... ${err}`
+   })
+  }catch (e){
+   alert(e + ' ... ERROR 9984 ' + errmsg);throw "fetch error"
+  }
+ }
+ function showPP(){
+  anime.timeline()
+   .add({targets:pp,opacity:[0,1],duration,easing})
+   .add({targets:ctnr,opacity:[0,1],scale:[.9,1],duration,easing})
+   .add({targets:btnCl,opacity:[0,1],duration,complete:()=>{
+    const y=s('.hiddenSrllTo');
+     if(y)y.scrollIntoView({block: "start",behavior:"smooth"})
+    }})
+  //d.body.classList.add('ovh');
+  pp.classList.remove('dn');
+ }
+
+ for(const el of btnCrss){
+  el.addEventListener('click',function(){
+   if(!lh){alert(errmsg+' ERROR0257');throw "NO load DIV"}
+   if(jsonData.folder&&this.dataset.id){
+    getJSON(jsonData.folder,this.dataset.id)
+   }else{
+    alert(errmsg+' ERROR0258');throw "NO load data id id btn"
+   }
+   showPP()
+  })
+ }
+ if(btnCl&&pp&&ctnr) {
+  btnCl.addEventListener('click',()=>{
+   clsPP()
+  });
+  document.onkeydown = e=>{
+   let isEscape = false;
+   if ("key" in e) {isEscape = (e.key === "Escape" || e.key === "Esc")}
+   if (isEscape) {clsPP()}
+  };
+ }
+}else{
+ alert(errmsg+' ERROR0259')
+ console.log('! > btnCrss | btnCrss?.length>0 | json')
+}
+
+/* const JSOnFetchLink=s('.JSOnFetchLink');
+ if(JSOnFetchLink){
+  fetch(JSOnFetchLink.src).then(e=>e.text()).then(e=>{
+   const js=d.createElement('script');
+   js.innerHTML=e;
+   d.body.appendChild(js);
+   js.remove();
+   JSOnFetchLink.remove()
+  })
+ }*/
+
+
+})()</script>

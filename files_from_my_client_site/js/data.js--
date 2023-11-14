@@ -1,0 +1,266 @@
+"use strict";
+const errmsg="К сожалению, что-то пошло не так. Перезагрузите страницу. Если ситуация повторяется, свяжитесь с нами по email или тел."
+fetch('/sys/pub/asyncFormFeedback.html').then(e=>e.text()).then(e=>{
+    const div=d.createElement('div'),
+          openForm=s('.loadAsyncForm');
+    div.innerHTML=e;
+    d.body.appendChild(div);
+
+    if(openForm){
+        const form=s('.popupDiv .getFormForOpenForm')
+        if(form)openForm.innerHTML=form.innerHTML;
+        openForm.classList.add('contact');
+        action('.loadAsyncForm')
+    }
+
+    fetch('/sys/js/anime.min.js').then(e=>e.text()).then(e=>{
+        const an=d.createElement('script');
+        an.innerHTML=e
+        d.body.appendChild(an);
+        const cb=a('.goToFree'),
+         pp=s('.popupJS'),
+         duration=500,
+         easing='linear',
+         ee='easeOutElastic',
+         close=s('.pclose');
+        if(pp&&cb&&cb?.length>0){
+            for(const el of cb){
+                el.addEventListener('click',()=>{
+                    anime({targets:close,translateY:'-110%'})
+                    anime({targets:pp,opacity:0,duration:0,complete:()=>{
+                            pp.classList.remove('dn');
+                            anime.timeline().add({targets:pp,opacity:1,duration,easing})
+                             .add({targets:close,translateY:'0',duration,easing:ee})
+                             .add({targets:'.popup',scale:[.5,1],opacity:[0,1],duration,easing})
+                             .add({targets: '.popupJS label',translateY: [50,0],opacity:[0,1],delay: anime.stagger(100),complete:()=>{s('[type="tel"]').focus()}})
+                    }});
+                    const vdo=s('video');
+                    if(vdo)vdo.pause();
+                })
+            }
+            if(close){
+                close.addEventListener('click',()=>{
+                    anime({targets:close,translateY:'-110%',duration,easing,complete:()=>{
+                            anime.timeline()
+                             .add({targets: '.popupJS label',translateY: [0,50],opacity:[1,0],delay: anime.stagger(100),complete:()=>{s('[type="tel"]').focus()}})
+                             .add({targets:'.popup',scale:.5,opacity:0,duration,easing})
+                             .add({targets:'.popupJS',opacity:0,duration,easing,complete:()=>{
+                                 pp.classList.add('dn');
+                                 const vdo=s('video');
+                                 if(vdo)vdo.play();
+                             }});
+                    }});
+                })
+                // HERE ACTION!!!
+                action('.popupDiv')
+            }
+        }
+    })
+})
+
+function action(formClassname){
+    function chTkn(){
+        const token = s('.token');
+        if (!token||token===''||!token.value||token.length<20) {
+            alt('Ошибка 02. '+errmsg);
+            return 0;
+        }
+        return 1;
+    }
+    function chSiSe(){
+        const stse = s('.siteSettings');
+        if (!stse||stse==='') {
+            alt('Ошибка 01. '+errmsg);
+            return 0;
+        }
+        return 1;
+    }
+    const cs=s(formClassname+' .contact-send');
+    if(cs){
+        cs.addEventListener('click',()=>{
+            let q1=1;
+            if(!chTkn()) {q1 = 0;throw "Token error..."};
+            if(!chSiSe()) {q1 = 0;throw "SiSett error..."};
+            if (q1===1) {
+                const data = {};
+                data.name = s(formClassname+' .formName');
+                data.phone = s(formClassname+' .formTel');
+                data.text = s(formClassname+' .formTxt');
+                data.mailto = JSON.parse(s('.siteSettings').innerText)?.emailTo;
+                if(!data.mailto)alt(errmsg);
+                const altCl=a('.alt-att');
+                if(altCl&&altCl?.length>0){
+                    for(const el of altCl){
+                        el.classList.remove('alt-att')
+                    }
+                }
+                Object.values(data).forEach(e=>{
+                    if(e.value===''&&e.getAttribute('id')!='z3'){
+                        e.classList.remove('alt-att');
+                        e.classList.add('alt-att');
+                        e.focus();
+                        alt(`Необходимо заполнить ${e.getAttribute('placeholder').toLowerCase()}.`);
+                        e.addEventListener('click',()=>{if(e.classList.contains('alt-att')){e.classList.remove('alt-att')}})
+                        throw 'Value is empty.';
+                    }
+                });
+                if(data.phone.value.replace(/\D/g,"").length<10||data.phone.value.replace(/\D/g,"").length>20){
+                    data.phone.focus();
+                    alt('Номер телефона введен неверно. '+data.phone.value);
+                    throw "Invalid phone number";
+                }
+                data.name=data.name.value;
+                data.phone=data.phone.value;
+                data.text=data.text.value;
+                try {
+                    fetch('/', {
+                        method: 'post',
+                        headers: {
+                            'Accept': 'application/json, text/plain',
+                            'X-Token': s('.token').value,
+                            'Content-Type': 'application/json'
+                        },
+                        mode: "same-origin",
+                        cache: "force-cache",
+                        credentials: "same-origin",
+                        body: JSON.stringify({location_: location.href, set: 'feedback', data})
+                    }).then(res => res.json())
+                     .then(res => {
+                         if (res.s===undefined||res.d===undefined)return false;
+                         if (res.s===1)alt(res.d);
+                         if (res.d)alt(res.d);
+                         if (res.j) {
+                             let s = d.createElement('script');
+                             s.classList.add("JS");
+                             s.innerHTML = res.j;
+                             d.body.appendChild(s)
+                         };
+                     })
+                     .catch((e) => {alt('Ошибка...' + e)});
+                } catch (e) {
+                    alt('Ошибка... ' + e);
+                }
+            }
+        })
+    }
+}
+
+const asyncVideo=s('video[data-src]');
+if(asyncVideo){
+    const src=asyncVideo.dataset.src.split('|');//1080|720
+    if(window.innerWidth>1390&&src[0]){//1080
+        asyncVideo.src=src[0];
+    }else if(src[1]){
+        asyncVideo.src=src[1];
+    }else if(src[0]){
+        asyncVideo.src=src[0]
+    }
+    asyncVideo.removeAttribute(asyncVideo.dataset.src)
+    //asyncVideo.src=asyncVideo.dataset.src;
+    //asyncVideo.removeAttribute(asyncVideo.dataset.src)
+}
+
+const copy=a('.copy');
+if(copy){
+    function copyMe(text) {
+        const hiddenInputEl=s('.JhiddenInput');
+        if(hiddenInputEl===null){
+            const hiddenInput=d.createElement('input');
+            hiddenInput.classList.add('JhiddenInput','hideIn');
+            hiddenInput.setAttribute('readonly','');
+            d.body.append(hiddenInput);
+        };
+        const hiddenInput=s('.JhiddenInput');
+        hiddenInput.setAttribute('value',text);
+        const copyText =s('.JhiddenInput');
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        d.execCommand("copy");
+        hiddenInput.remove();
+    };
+    copy.forEach(function (el) {
+        el.addEventListener('click',()=>{
+            copyMe(el.innerText);
+            alt('Скопировано')
+        });
+    })
+};
+const loadSvg=a('.loadSvg');
+if(loadSvg&&loadSvg.length){
+    for(const el of loadSvg){
+        const path=el.dataset.path;
+        if(path){
+            fetch(path).then(e=>e.text()).then(e=>{
+                el.insertAdjacentHTML("afterend",e)
+                el.remove();
+            })
+        }
+    }
+}
+
+fetch('/sys/asyncS.css').then(e=>e.text()).then(e=>{
+    const st=d.createElement('style');
+    st.innerText=e;
+    d.body.appendChild(st)
+})
+
+const bgCatImg=s('.catImg');
+if(bgCatImg){
+    const imgData=JSON.parse(bgCatImg.innerText);
+    if(imgData.catImg&&imgData.catImgAlt) {
+        const im='/'+imgData.catImg.replace(/\.[^/.]+$/, ""),
+            pic=d.createElement('picture');
+        pic.innerHTML=`
+<source type="image/avif" srcset="${im}-750.avif 750w,
+${im}-1080.avif 1080w,
+${im}-1366.avif 1366w,
+${im}-1920.avif 1920w,
+${im}-2560.avif 2560w" sizes="(min-width: 2560px) 2560px, 100vw">
+<source type="image/webp" srcset="${im}-750.webp 750w,
+${im}-1080.webp 1080w,
+${im}-1336.webp 1366w,
+${im}-1920.webp 1920w,
+${im}-2560.webp 2560w" sizes="(min-width: 2560px) 2560px, 100vw">
+<img width="2560" height="1549" sizes="(min-width: 2560px) 2560px, 100vw" decoding="async" src="${im}-2560.jpg" class="pa z-1 bg-img" srcset="${im}-750.jpg 750w,
+${im}-1080.jpg 1080w,
+${im}-1366.jpg 1366w,
+${im}-1920.jpg 1920w,
+${im}-2560.jpg 2560w" alt="${imgData.catImgAlt}">`;
+        d.body.appendChild(pic)
+    }
+}
+
+if(window.innerWidth>1200){
+    let bbb=s('.cardIcn');
+    if(bbb){
+        fetch('/sys/js/button.min.js').then(e=>e.text()).then(e=>{
+            const scr=d.createElement('script');
+            scr.innerHTML=e;
+            d.body.appendChild(scr)
+        })
+    }
+    bbb=null
+}
+
+// slider
+fetch('/sys/js/splide.min.js').then(e=>e.text()).then(e=>{
+    const scr=d.createElement('script'),
+          slideScr=s('.slider script');
+    scr.innerHTML=e;
+    d.body.appendChild(scr);
+    // create slides
+    const sldJSN=(slideScr)?JSON.parse(slideScr.innerText):null;
+    if(!sldJSN) {console.log('ERR055; no slide data');return false;}
+    Object.values(sldJSN).forEach(e=>{
+        const li=d.createElement('li');
+        li.classList.add('splide__slide');
+        li.innerHTML=`<h4>${e?.title}</h4><p>${e?.body}</p>`;
+        s('.splide__list').appendChild(li)
+    });
+    // \ create slides
+    const splide = new Splide( '.splide', {
+        /*type:'loop',*/
+    });
+    setTimeout(()=>{splide.mount()},2000)
+});
+// \ slider

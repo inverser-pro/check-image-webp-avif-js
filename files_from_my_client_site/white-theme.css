@@ -1,0 +1,23 @@
+body.white .mainContent{background-color:#fff;color:#000}
+body.white a,body.white .catHeader.mainpage a,body.white .catHeader a.c0,body.white header.header.headerCl a,body.white .readmore,body.white .contact input,body.white .contact textarea,body.white .getFormForOpenForm,body.white .goToPaidCourse{color:#000}
+body.white svg.invert{filter:none}
+body.white .bgBB{background-color:rgb(255 255 255 / 99%)}
+body.white footer a,body.white footer ul.mod-menu li a{color:#d4d4d4}
+body.white .logo img{filter:brightness(0)}
+body.white header.header.headerCl{color:#000;background-color:rgb(224 224 224 / 69%)}
+body.white .mobmenu{background-color:rgb(255 255 255 / 95%)}
+body.white .mobmenu small{color:#424141}
+body.white .card{background-color:#ceddee;box-shadow:0 0.75rem 7rem #bdc1c6}
+body.white *::-webkit-scrollbar-thumb{background-color:#5d748a}
+body.white .slider_ .slide,body.white .bgb{background-color:#a1c4ec}
+body.white .bxsh{box-shadow:0 3px 15px #90a9c5}
+body.white .divider svg{filter:invert(0)}
+body.white .popupDiv{background-color:rgb(182 198 209 / 90%)}
+body.white .pcl{box-shadow:none}
+body.white .popup{box-shadow:0 0.3rem 1rem #a2b3be;background-color:#fff}
+body.white .c7c{color:#7c7c7c}
+body.white footer,body.white .clsBtn{background-color:#2e3d4b}
+body.white .mobmenu .clsBtn{color:#fff}
+body.white .mobmenu .clsBtn svg{fill:#fff}
+body.white .menuBtn svg{fill:#000!important}
+body.white .cbl,body.white nav.nav ul li a {color:#356190}
