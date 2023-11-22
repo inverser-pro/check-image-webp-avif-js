@@ -1,3 +1,6 @@
+Repo для урока по AWWWARDS
+https://youtube.com/live/N3lmoftlm1k
+---------
 # check-image-webp-avif-js
 ## Check image webp, avif with native JavaScript. HTML5 picture element code example
 
